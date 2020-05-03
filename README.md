@@ -18,12 +18,15 @@
 
 ## Presentation
 
+
 Once the plugin is installed and configured, the sylius image system for the ressource (product etc) will be replaced by complete media management system. You'll be able to:
+
 - upload image (of course)
 - open a file manager in order to retrieve all the image uploaded, and select one of them
 - crop freely the image directly in the admin before saving it
 - select a format that will force you to crop the image with a certain ratio)
 
+This plugin is heavily based on the artgris media bundle and file manager.
 
 ## Installation
 
