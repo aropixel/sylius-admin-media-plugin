@@ -1,0 +1,9 @@
+{% extends '@!ArtgrisFileManager/manager.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'bundles/aropixelsyliusadminmedia/css/admin.css'} %}
+{% endblock %}
+

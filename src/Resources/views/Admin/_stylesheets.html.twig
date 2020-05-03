@@ -1,0 +1,14 @@
+{# MEDIA MANAGER BUNDLE #}
+
+{# Bootstrap #}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+{# Font Awesome #}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{# Artgris FileManager #}
+<link rel="stylesheet" href="{{ asset('bundles/artgrisfilemanager/libs/blueimp-file-upload/css/jquery.fileupload.css') }}">
+{# Import fengyuanchen/cropper #}
+<link rel="stylesheet" href="{{ asset('bundles/artgrismedia/libs/cropperjs-1.4.1/cropper.min.css') }}">
+{# Then the default bundle's CSS #}
+<link rel="stylesheet" href="{{ asset('bundles/artgrismedia/css/media.css') }}">
+
+{% include '@SyliusUi/_stylesheets.html.twig' with {'path': 'bundles/aropixelsyliusadminmediaplugin/css/admin.css'} %}

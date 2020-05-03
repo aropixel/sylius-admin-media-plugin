@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="aropixel_sylius_admin_media.image_crop.crop_ratio_manager" class="Aropixel\SyliusAdminMediaPlugin\ImageCrop\CropRatioManager">
+            <argument type="service" id="parameter_bag"/>
+        </service>
+        <!-- créer un alias du service avec le nom de la classe lui permet d'être autowire dans les controleurs, services, etc -->
+        <service id="Aropixel\SyliusAdminMediaPlugin\ImageCrop\CropRatioManager" alias="aropixel_sylius_admin_media.image_crop.crop_ratio_manager" />
+
+        <!-- controller are services that must be public -->
+        <service id="aropixel_sylius_admin_media.controller.admin_file_manager"
+                 class="Aropixel\SyliusAdminMediaPlugin\Controller\Admin\FileManager\ManagerController"
+                 public="true"
+        />
+
+        <service id="aropixel_sylius_admin_media.controller.admin_media_crop_ratio"
+                 class="Aropixel\SyliusAdminMediaPlugin\Controller\Admin\Crop\CropRatioController"
+                 public="true"
+        >
+            <argument type="service" id="aropixel_sylius_admin_media.image_crop.crop_ratio_manager" />
+        </service>
+
+        <service id="Artgris\Bundle\FileManagerBundle\Helpers\UploadHandler"
+                 class="Aropixel\SyliusAdminMediaPlugin\FileManager\Helpers\UploadHandler"
+        />
+
+
+        <service id="sylius.form.type.product_image" class="Aropixel\SyliusAdminMediaPlugin\Form\Type\ProductImageType">
+            <argument type="service" id="aropixel_sylius_admin_media.image_crop.crop_ratio_manager"/>
+            <argument>%sylius.model.product_image.class%</argument>
+            <argument>%sylius.form.type.product_image.validation_groups%</argument>
+            <tag name="form.type" />
+        </service>
+
+        <service id="sylius.form.type.taxon_image" class="Aropixel\SyliusAdminMediaPlugin\Form\Type\TaxonImageType">
+            <argument type="service" id="aropixel_sylius_admin_media.image_crop.crop_ratio_manager"/>
+            <argument>%sylius.model.product_image.class%</argument>
+            <tag name="form.type" />
+        </service>
+
+
+        <service id="sylius.form.extension.type.product" class="Aropixel\SyliusAdminMediaPlugin\Form\Extension\ProductTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\ProductBundle\Form\Type\ProductType"/>
+        </service>
+
+        <service id="sylius.form.extension.type.taxon" class="Aropixel\SyliusAdminMediaPlugin\Form\Extension\TaxonTypeExtension">
+            <tag name="form.type_extension" extended-type="Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType"/>
+        </service>
+
+
+    </services>
+</container>

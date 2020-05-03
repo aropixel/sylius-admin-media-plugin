@@ -1,0 +1,64 @@
+{% extends '@!SyliusUi/Form/imagesTheme.html.twig' %}
+
+{% block collection_widget -%}
+    {% from '@SyliusResource/Macros/notification.html.twig' import error %}
+    {% import _self as self %}
+    {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
+
+    {% apply spaceless %}
+        <div data-form-type="collection" {{ block('widget_container_attributes') }}
+                {% if prototype is defined and allow_add %}
+                    data-prototype='{{ self.collection_item(prototype, allow_delete, button_delete_label, '__name__')|e }}'
+                {%- endif -%}
+        >
+            {{ error(form.vars.errors) }}
+
+            {% if prototypes|default is iterable %}
+                {% for key, subPrototype in prototypes %}
+                    <input type="hidden" data-form-prototype="{{ key }}" value="{{ self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
+                {% endfor %}
+            {% endif %}
+
+            <div data-form-collection="list" class="js-admin-collection-media">
+                {% for child in form %}
+                    {{ self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
+                {% endfor %}
+            </div>
+
+            {% if prototype is defined and allow_add %}
+                <a href="#" class="ui labeled icon button" data-form-collection="add">
+                    <i class="plus square outline icon"></i>
+                    {{ button_add_label|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endapply %}
+{%- endblock collection_widget %}
+
+{% macro collection_item(form, allow_delete, button_delete_label, index) %}
+    {% apply spaceless %}
+        <div data-form-collection="item" data-form-collection-index="{{ index }}" class="js-admin-collection-media-item column">
+            <div class="ui box segment">
+                {{ form_row(form.type, {
+                    attr: {
+                        'class': 'js-admin-media-type',
+                        'data-crop_ratio_url': absolute_url(path('aropixel_sylius_admin_media_crop_ratio'))
+                    }
+                }) }}
+                {{ form_row(form.path) }}
+            </div>
+            {% if allow_delete %}
+                <a href="#" data-form-collection="delete" class="ui red labeled icon button" style="margin-bottom: 1em;">
+                    <i class="trash icon"></i>
+                    {{ button_delete_label|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endapply %}
+{% endmacro %}
+
+{% block sylius_taxon_image_widget %}
+    {% apply spaceless %}
+        {{ form_widget(form) }}
+    {% endapply %}
+{% endblock %}

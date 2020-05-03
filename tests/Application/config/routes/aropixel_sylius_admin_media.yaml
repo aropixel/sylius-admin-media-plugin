@@ -1,0 +1,2 @@
+aropixel_sylius_admin_media:
+    resource: '@AropixelSyliusAdminMediaPlugin/Resources/config/routes.xml'

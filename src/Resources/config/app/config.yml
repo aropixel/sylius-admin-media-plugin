@@ -1,0 +1,14 @@
+sylius_ui:
+    events:
+        sylius.admin.layout.stylesheets:
+            blocks:
+                aropixel_admin_media_styles: "@AropixelSyliusAdminMediaPlugin/Admin/_stylesheets.html.twig"
+        sylius.admin.layout.javascripts:
+            blocks:
+                aropixel_admin_media_styles: "@AropixelSyliusAdminMediaPlugin/Admin/_scripts.html.twig"
+
+artgris_file_manager:
+    web_dir: public
+    conf:
+        default:
+            dir: "../public/uploads"

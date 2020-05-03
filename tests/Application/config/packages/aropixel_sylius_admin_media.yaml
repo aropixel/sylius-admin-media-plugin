@@ -1,0 +1,9 @@
+imports:
+    - { resource: "@AropixelSyliusAdminMediaPlugin/Resources/config/app/config.yml" }
+
+aropixel_sylius_admin_media:
+
+    default_crops:
+        square: "Format carré"
+        portrait: "Format portrait"
+        landscape: "Format paysage"

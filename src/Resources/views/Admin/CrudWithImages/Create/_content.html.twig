@@ -1,0 +1,37 @@
+{% set index_url = path(
+        configuration.vars.index.route.name|default(configuration.getRouteName('index')),
+        configuration.vars.index.route.parameters|default(configuration.vars.route.parameters|default({}))
+    )
+%}
+
+<div class="ui segment">
+    {{ form_start(form, {'action': path(configuration.vars.route.name|default(configuration.getRouteName('create')), configuration.vars.route.parameters|default({})), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+    <div class="ui stackable grid sylius-tabular-form">
+        <div class="three wide column">
+            <div class="ui large fluid vertical menu">
+                <a class="item" data-tab="details">Détails</a>
+                <a class="item active" data-tab="media">Media</a>
+            </div>
+        </div>
+
+        <div class="thirteen wide column">
+            {% include '@SyliusAdmin/Crud/form_validation_errors_checker.html.twig' %}
+
+            {% if configuration.vars.templates.form is defined %}
+                {% include configuration.vars.templates.form %}
+            {% else %}
+                {% include '@AropixelSyliusAdminMediaPlugin/Admin/CrudWithImages/Tab/_details.html.twig' %}
+                {% include '@AropixelSyliusAdminMediaPlugin/Admin/CrudWithImages/Tab/_media.html.twig' %}
+                {#{{ form_widget(form) }}#}
+            {% endif %}
+
+            {{ sylius_template_event([event_prefix ~ '.form', 'sylius.admin.create.form'], {'metadata': metadata, 'resource': resource, 'form': form}) }}
+        </div>
+
+    </div>
+
+    {% include '@SyliusUi/Form/Buttons/_create.html.twig' with {'paths': {'cancel': index_url}} %}
+
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+</div>

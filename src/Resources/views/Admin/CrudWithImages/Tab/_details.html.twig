@@ -1,0 +1,23 @@
+<div class="ui active tab" data-tab="details">
+    <h3 class="ui top attached header">{{ 'sylius.ui.details'|trans }}</h3>
+
+    <div class="ui attached segment">
+        {{ form_errors(form) }}
+
+
+            <div class="column">
+                <div class="ui segment">
+
+                    {% for field in form.children %}
+                        {% if field.vars.name != 'images' %}
+                            {{ form_row(field) }}
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+    </div>
+</div>

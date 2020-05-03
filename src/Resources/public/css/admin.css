@@ -1,0 +1,104 @@
+.modal-backdrop {
+    display: none !important;
+}
+
+.modal-open {
+    overflow-y: auto !important;
+}
+
+.modal {
+    position: relative !important;
+}
+
+.ui.visible.left.sidebar~.fixed,
+.ui.visible.left.sidebar~.pusher {
+    -webkit-transform: translate3d(260px,0,0) !important;
+    transform: translate3d(260px,0,0) !important;
+}
+
+.artgris-media-modal {
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 0px 43px -21px;
+    padding-left: 0px !important;
+}
+
+.modal.show .modal-dialog {
+    margin: 0px !important;
+}
+
+#dropzone .sf-display-none {
+    display: none !important;
+}
+
+#dropzone body {
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+.spinner-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.d-b {
+    display: block !important;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.double-bounce1, .double-bounce2 {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+    0%, 100% { -webkit-transform: scale(0.0) }
+    50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+    0%, 100% {
+        transform: scale(0.0);
+        -webkit-transform: scale(0.0);
+    } 50% {
+          transform: scale(1.0);
+          -webkit-transform: scale(1.0);
+      }
+}
+
+.modal-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: 0;
+}
+
+.d-n {
+    display: none;
+}
