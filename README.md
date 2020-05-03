@@ -4,4 +4,5 @@
   </a>
 </p>
 
-<h1 align="center">Aropixel Blog Bundle</h1>
+<h1 align="center">Sylius Admin Media Pugin</h1>
+<h2 align="center">Enhanced sylius admin media management with image cropping, library...</h2>
