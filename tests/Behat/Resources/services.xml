@@ -5,12 +5,11 @@
         <defaults public="true" />
         <!-- Put your Behat services here -->
 
-        <service id="acme_sylius_example.context.ui.shop.welcome" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Context\Ui\Shop\WelcomeContext">
-            <argument type="service" id="acme_sylius_example.page.shop.static_welcome" />
-            <argument type="service" id="acme_sylius_example.page.shop.dynamic_welcome" />
+        <service id="aropixel_sylius_admin_media.context.setup.product_images" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Context\Setup\ProductImagesContext">
+            <argument type="service" id="aropixel_sylius_admin_media.page.admin.product.create_simple_with_images" />
         </service>
 
-        <service id="acme_sylius_example.page.shop.static_welcome" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Page\Shop\StaticWelcomePage" parent="sylius.behat.symfony_page" public="false" />
-        <service id="acme_sylius_example.page.shop.dynamic_welcome" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Page\Shop\DynamicWelcomePage" parent="sylius.behat.symfony_page" public="false" />
+        <service id="aropixel_sylius_admin_media.page.admin.product.create_simple_with_images" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Page\Admin\Product\CreateSimpleProductWithImagesPage" parent="sylius.behat.page.admin.product.create_simple" public="false" />
+
     </services>
 </container>

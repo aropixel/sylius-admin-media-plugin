@@ -2,9 +2,17 @@
 
 default:
     suites:
-        greeting_customer:
+        upload_images:
             contexts:
-                - acme_sylius_example.context.ui.shop.welcome
+                #purge la bdd avant chaque scénario
+                - sylius.behat.context.hook.doctrine_orm
+
+                # permet de gérer la connexion au BO
+                - sylius.behat.context.setup.admin_security
+                # permet de créer des produits
+                - sylius.behat.context.ui.admin.managing_products
+
+                - aropixel_sylius_admin_media.context.setup.product_images
 
             filters:
-                tags: "@greeting_customer"
+                tags: "@upload_images"
