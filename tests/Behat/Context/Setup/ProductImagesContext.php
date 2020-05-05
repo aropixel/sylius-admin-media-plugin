@@ -39,9 +39,7 @@ class ProductImagesContext implements Context
 
         // on vérifie que le lien de l'image en preview est valide
         Assert::true($isImagePreviewVisible);
-
-        // et voir si y' bien une image dans la balise img
-        // si possible on check qu'elle ait le même nom
+        
     }
 
 }

@@ -41,14 +41,7 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
 
         Assert::true(strpos($imgUrl, $path) !== false);
 
-        $baseUrl = $this->getParameter('base_url');
-
-        $this->getSession()->visit( $baseUrl . '/' . $imgUrl );
-
-        $pageText = $this->getDocument()->getText();
-
-        // return true si c'est trouvé
-        return (strpos($pageText, '404 Not Found') === false);
+        return $this->isImageLinkBroken( $imgUrl );
 
     }
 
@@ -68,6 +61,25 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
         return array_merge(parent::getDefinedElements(), [
             'spinner' => '.spinner-container',
         ]);
+    }
+
+    /**
+     * @param string|null $imgUrl
+     *
+     * @return bool
+     */
+    private function isImageLinkBroken( ?string $imgUrl ): bool
+    {
+        $baseUrl = $this->getParameter( 'base_url' );
+
+        $this->getSession()->visit( $baseUrl . '/' . $imgUrl );
+
+        $pageText = $this->getDocument()->getText();
+
+        $this->getSession()->back();
+
+        // si le 404 n'a pas été trouvé, retourne true
+        return ( strpos( $pageText, '404 Not Found' ) === false );
     }
 
 }
