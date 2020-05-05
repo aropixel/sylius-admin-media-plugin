@@ -26,7 +26,6 @@ class ProductImagesContext implements Context
      */
     public function iShouldSeeImagePreview($path)
     {
-
         $page = $this->createSimpleProductWithImagesPage;
 
         // le loader doit être affiché
@@ -39,7 +38,31 @@ class ProductImagesContext implements Context
 
         // on vérifie que le lien de l'image en preview est valide
         Assert::true($isImagePreviewVisible);
-        
+
+    }
+
+    /**
+     * @When I add an image item
+     */
+
+    public function iAddAnImageItem()
+    {
+        $this->createSimpleProductWithImagesPage->addImageItem();
+    }
+
+    /**
+     * @Then I should see the configured default crops as type options
+     */
+    public function listDefaultCropsInType()
+    {
+        $defaultCrops = $this->createSimpleProductWithImagesPage->getDefaultCrops();
+
+        $optionsInTypeAsText = $this->createSimpleProductWithImagesPage->getTypeOptions();
+
+        // foreach crops, check if the label of the crop is found is the options of the type select input
+        foreach ($defaultCrops as $defaultCrop) {
+            Assert::true(strpos($optionsInTypeAsText, $defaultCrop) !== false);
+        }
     }
 
 }

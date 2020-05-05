@@ -9,13 +9,19 @@ Feature: Adding a new product with an image
         Given I am logged in as an administrator
 
     @ui @javascript
-    Scenario: Adding an image to product
+    Scenario: Adding an non cropped image to a product
         Given I want to create a new simple product
         When I attach the "t-shirts.jpg" image
         Then I should see the "t-shirts.jpg" image preview
-        When I specify its code as "T-SHIRT"
+        And I specify its code as "T-SHIRT"
         And I name it "t-shirt" in "English (United States)"
         And I set its slug to "t-shirt" in "English (United States)"
         And I set its price to "$100.00" for "United States" channel
         And I add it
         Then I should be notified that it has been successfully created
+
+    @ui @javascript
+    Scenario: Select a default crop as image type
+        Given I want to create a new simple product
+        When I add an image item
+        Then I should see the configured default crops as type options

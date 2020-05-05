@@ -9,7 +9,9 @@
             <argument type="service" id="aropixel_sylius_admin_media.page.admin.product.create_simple_with_images" />
         </service>
 
-        <service id="aropixel_sylius_admin_media.page.admin.product.create_simple_with_images" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Page\Admin\Product\CreateSimpleProductWithImagesPage" parent="sylius.behat.page.admin.product.create_simple" public="false" />
+        <service id="aropixel_sylius_admin_media.page.admin.product.create_simple_with_images" class="Tests\Aropixel\SyliusAdminMediaPlugin\Behat\Page\Admin\Product\CreateSimpleProductWithImagesPage" parent="sylius.behat.page.admin.product.create_simple" public="false">
+            <argument type="service" id="parameter_bag" />
+        </service>
 
     </services>
 </container>
