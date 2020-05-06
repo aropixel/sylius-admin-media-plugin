@@ -130,6 +130,15 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
         return $defaultsCrops;
     }
 
+    public function getProductImageCrops()
+    {
+        $entitiesCrops = $this->params->get(self::PARAM_ENTITIES_CROPS);
+
+        $productImageCrops = $entitiesCrops['Sylius\Component\Core\Model\ProductImage'];
+
+        return $productImageCrops;
+    }
+
     public function getTypeOptions()
     {
         $imageForm = $this->getLastImageElement();
@@ -138,11 +147,87 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
         return $typeInput->getText();
     }
 
+    public function isCroppingFree()
+    {
+        $cropModal = $this->getCropModal();
+
+        $this->getDocument()->waitFor(10000000, function () use ($cropModal) {
+            return (!is_null($cropModal->find('css', '.point-nw')));
+        });
+
+        // find the crop box which contain the width and height
+        $cropperBoxInitialStyle = $cropModal->find('css', '.cropper-crop-box')->getAttribute('style');
+
+        $pointNWCropDrag = $cropModal->find('css', '.point-nw');
+        $pointWCropDrag = $cropModal->find('css', '.point-w');
+
+        $pointNWCropDrag->dragTo($pointWCropDrag);
+
+        $cropperBoxResizedStyle = $cropModal->find('css', '.cropper-crop-box')->getAttribute('style');;
+
+        $widthBeforeDrag = $this->buildArrayFromStyleString($cropperBoxInitialStyle)['width'];
+        $widthAfterDrag = $this->buildArrayFromStyleString($cropperBoxInitialStyle)['width'];
+
+
+        return ($widthBeforeDrag === $widthAfterDrag);
+
+        /*$this->getSession()->evaluateScript("
+            return (function() {
+
+                const westCropDrag = document.evaluate(
+                    ".$westCropDragXpath.",
+                    document,
+                    null,
+                    XPathResult.FIRST_ORDERED_NODE_TYPE,
+                    null
+                ).singleNodeValue;
+
+                console.log(westCropDrag);
+            })()
+        ");*/
+
+
+    }
+
+    private function buildArrayFromStyleString(string $style)
+    {
+        $dictionary = [];
+
+        if (empty($style)) {
+            return $dictionary;
+        }
+
+        foreach (explode(';', rtrim($style, ';, ')) as $css) {
+            $parts = explode(':', $css);
+            $dictionary[trim($parts[0])] = trim($parts[1]);
+        }
+
+        return $dictionary;
+    }
+
+
+
     protected function getDefinedElements(): array
     {
         return array_merge(parent::getDefinedElements(), [
             'spinner' => '.spinner-container',
         ]);
+    }
+
+    private function getCropModal()
+    {
+        $imageForm = $this->getLastImageElement();
+        $triggerCropModal = $imageForm->find( 'css', '.js-crop' );
+
+        $triggerCropModal->click();
+
+        $cropModal = $imageForm->find( 'css', '.artgris-media-crop-modal' );
+
+        $this->getDocument()->waitFor( 10000000, function () use ( $cropModal ) {
+            return $cropModal->isVisible();
+        } );
+
+        return $cropModal;
     }
 
 }

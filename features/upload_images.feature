@@ -21,7 +21,22 @@ Feature: Adding a new product with an image
         Then I should be notified that it has been successfully created
 
     @ui @javascript
-    Scenario: Select a default crop as image type
+    Scenario: List default crops as selectable image types
         Given I want to create a new simple product
         When I add an image item
         Then I should see the configured default crops as type options
+
+    @ui @javascript
+    Scenario: List entity crops as selectable image types
+        Given I want to create a new simple product
+        When I add an image item
+        Then I should see the configured entity crops as type options
+
+    @ui @javascript
+    Scenario: Crop freely an image
+        Given I want to create a new simple product
+        When I attach the "t-shirts.jpg" image
+        Then I should be able to crop freely the image
+
+    # Crop an image based on crop ratio
+    # See the library contain uploaded images

@@ -53,11 +53,13 @@ class ProductImagesContext implements Context
     /**
      * @Then I should see the configured default crops as type options
      */
-    public function listDefaultCropsInType()
+    public function iShouldSeeDefaultCropsAsOptions()
     {
-        $defaultCrops = $this->createSimpleProductWithImagesPage->getDefaultCrops();
+        $page = $this->createSimpleProductWithImagesPage;
 
-        $optionsInTypeAsText = $this->createSimpleProductWithImagesPage->getTypeOptions();
+        $defaultCrops = $page->getDefaultCrops();
+
+        $optionsInTypeAsText = $page->getTypeOptions();
 
         // foreach crops, check if the label of the crop is found is the options of the type select input
         foreach ($defaultCrops as $defaultCrop) {
@@ -65,4 +67,34 @@ class ProductImagesContext implements Context
         }
     }
 
+    /**
+     * @Then I should see the configured entity crops as type options
+     */
+    public function iShouldSeeEntityCropsAsOptions()
+    {
+        $page = $this->createSimpleProductWithImagesPage;
+
+        $productImageCrops = $page->getProductImageCrops();
+
+        $optionsInTypeAsText = $page->getTypeOptions();
+
+        // foreach crops, check if the label of the crop is found is the options of the type select input
+        foreach ($productImageCrops as $productImageCrop) {
+            Assert::true(strpos($optionsInTypeAsText, $productImageCrop) !== false);
+        }
+    }
+
+    /**
+     * @Then I should be able to crop freely the image
+     */
+    public function iShouldBeAbleToCropFreely()
+    {
+        $page = $this->createSimpleProductWithImagesPage;
+
+        $page->waitForAjaxUpload();
+
+        $isCroppingFree = $page->isCroppingFree();
+
+        Assert::true($isCroppingFree);
+    }
 }
