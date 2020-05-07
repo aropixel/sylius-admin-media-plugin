@@ -37,6 +37,20 @@ Feature: Adding a new product with an image
         Given I want to create a new simple product
         When I attach the "t-shirts.jpg" image
         Then I should be able to crop freely the image
+        When I apply the crop
+        Then I should see the "cropped/" image preview
 
-    # Crop an image based on crop ratio
+
+    @ui @javascript
+    Scenario: Crop an image based on crop ratio
+        Given I want to create a new simple product
+        When I attach the "t-shirts.jpg" image
+        And I select the "Format carré" type
+        Then I should be able to crop the image only as square
+        When I apply the crop
+        # doesn't work with symfony in a subfolder (the ajax controller of artgris save the crop file
+        # with a calculated path that work only in a classic symfony folder structure -- maybe needs
+        # to be overrided in order to test and to prevent bugs in non classic symfony folder structure)
+        #Then I should see the "cropped/" image preview
+    
     # See the library contain uploaded images

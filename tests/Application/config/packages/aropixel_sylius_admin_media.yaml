@@ -5,10 +5,8 @@ aropixel_sylius_admin_media:
 
     entities_crops:
         Sylius\Component\Core\Model\ProductImage:
-            square: "Format carré page produit"
-            portrait: "Format portrait page home"
+            landscape: "Format paysage"
 
     default_crops:
         square: "Format carré"
         portrait: "Format portrait"
-        landscape: "Format paysage"

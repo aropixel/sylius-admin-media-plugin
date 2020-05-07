@@ -43,13 +43,12 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
     public function isSpinnerVisible()
     {
         $spinner = $this->getElement('spinner');
-        Assert::true($spinner->isVisible());
+        return $spinner->isVisible();
     }
 
     public function waitForAjaxUpload()
     {
-        // le timeout est en micro seconde, 10000000ms = 10s
-        $this->getDocument()->waitFor(10000000, function () {
+        $this->getDocument()->waitFor(10000, function () {
             return $this->isSpinnerHidden();
         });
     }
@@ -62,13 +61,19 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
 
     public function isImagePreviewVisible($path)
     {
+        $this->waitForAjaxUpload();
+
         $imageForm = $this->getLastImageElement();
 
         $imageNode = $imageForm->find('css', '.crop-hover img');
 
         $imgUrl = $imageNode->getAttribute('src');
 
-        Assert::true(strpos($imgUrl, $path) !== false);
+        $this->getDocument()->waitFor( 10000, function () use ( $imgUrl, $path ) {
+            return (strpos($imgUrl, $path) !== false);
+        } );
+
+        //Assert::true(strpos($imgUrl, $path) !== false);
 
         return $this->isImageLinkBroken( $imgUrl );
 
@@ -141,52 +146,49 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
 
     public function getTypeOptions()
     {
-        $imageForm = $this->getLastImageElement();
-        $typeInput = $imageForm->find('css', '.js-admin-media-type');
-
+        $typeInput = $this->getTypeInput();
         return $typeInput->getText();
+    }
+
+    private function getTypeInput()
+    {
+        $imageForm = $this->getLastImageElement();
+        return $imageForm->find('css', '.js-admin-media-type');
+    }
+
+    public function selectImageType($type)
+    {
+        $this->waitForAjaxUpload();
+
+        $typeInput = $this->getTypeInput();
+        $typeInput->selectOption($type);
     }
 
     public function isCroppingFree()
     {
-        $cropModal = $this->getCropModal();
+        $cropStyles = $this->cropImage();
 
-        $this->getDocument()->waitFor(10000000, function () use ($cropModal) {
-            return (!is_null($cropModal->find('css', '.point-nw')));
-        });
-
-        // find the crop box which contain the width and height
-        $cropperBoxInitialStyle = $cropModal->find('css', '.cropper-crop-box')->getAttribute('style');
-
-        $pointNWCropDrag = $cropModal->find('css', '.point-nw');
-        $pointWCropDrag = $cropModal->find('css', '.point-w');
-
-        $pointNWCropDrag->dragTo($pointWCropDrag);
-
-        $cropperBoxResizedStyle = $cropModal->find('css', '.cropper-crop-box')->getAttribute('style');;
-
-        $widthBeforeDrag = $this->buildArrayFromStyleString($cropperBoxInitialStyle)['width'];
-        $widthAfterDrag = $this->buildArrayFromStyleString($cropperBoxInitialStyle)['width'];
-
+        $widthBeforeDrag = $this->buildArrayFromStyleString( $cropStyles['before'] )['width'];
+        $widthAfterDrag  = $this->buildArrayFromStyleString( $cropStyles['after'] )['width'];
 
         return ($widthBeforeDrag === $widthAfterDrag);
+    }
 
-        /*$this->getSession()->evaluateScript("
-            return (function() {
+    public function isCroppingSquare()
+    {
+        $cropStyles = $this->cropImage();
 
-                const westCropDrag = document.evaluate(
-                    ".$westCropDragXpath.",
-                    document,
-                    null,
-                    XPathResult.FIRST_ORDERED_NODE_TYPE,
-                    null
-                ).singleNodeValue;
+        $widthBeforeDrag = $this->buildArrayFromStyleString( $cropStyles['before'] )['width'];
+        $heightBeforeDrag = $this->buildArrayFromStyleString( $cropStyles['before'] )['height'];
 
-                console.log(westCropDrag);
-            })()
-        ");*/
+        // check that the crop tool before resize it is square
+        Assert::true($widthBeforeDrag === $heightBeforeDrag);
 
+        $widthAfterDrag  = $this->buildArrayFromStyleString( $cropStyles['after'] )['width'];
+        $heightAfterDrag = $this->buildArrayFromStyleString( $cropStyles['after'] )['height'];
 
+        // check that the crop tool after resize it is square
+        return $widthAfterDrag === $heightAfterDrag;
     }
 
     private function buildArrayFromStyleString(string $style)
@@ -217,17 +219,62 @@ class CreateSimpleProductWithImagesPage extends CreateSimpleProductPage
     private function getCropModal()
     {
         $imageForm = $this->getLastImageElement();
+
         $triggerCropModal = $imageForm->find( 'css', '.js-crop' );
 
         $triggerCropModal->click();
 
         $cropModal = $imageForm->find( 'css', '.artgris-media-crop-modal' );
 
-        $this->getDocument()->waitFor( 10000000, function () use ( $cropModal ) {
+        $this->getDocument()->waitFor( 10000, function () use ( $cropModal ) {
             return $cropModal->isVisible();
         } );
 
         return $cropModal;
+    }
+
+    /**
+     * @return array
+     */
+    private function cropImage(): array
+    {
+
+        $this->waitForAjaxUpload();
+
+        $cropModal = $this->getCropModal();
+
+        $this->getDocument()->waitFor( 10000, function () use ( $cropModal ){
+            return ( ! is_null( $cropModal->find( 'css', '.point-nw' ) ) );
+        } );
+
+        // find the crop box which contain the width and height
+        $cropperBoxInitialStyle = $cropModal->find( 'css', '.cropper-crop-box' )->getAttribute( 'style' );
+
+        $pointNWCropDrag = $cropModal->find( 'css', '.point-nw' );
+        $pointWCropDrag  = $cropModal->find( 'css', '.point-w' );
+
+        $pointNWCropDrag->dragTo( $pointWCropDrag );
+
+        $cropperBoxResizedStyle = $cropModal->find( 'css', '.cropper-crop-box' )->getAttribute( 'style' );
+
+        return [
+            'before' => $cropperBoxInitialStyle,
+            'after' => $cropperBoxResizedStyle
+        ];
+    }
+
+    public function applyCrop()
+    {
+        $imageForm = $this->getLastImageElement();
+
+        $saveCrop = $imageForm->find('css', '.js-save');
+
+        $saveCrop->click();
+
+        $this->getDocument()->waitFor( 10000, function () use ( $imageForm ){
+            $modalBackground = $imageForm->find('css', '.js-modal-background');
+            return (!$modalBackground->isVisible());
+        } );
     }
 
 }

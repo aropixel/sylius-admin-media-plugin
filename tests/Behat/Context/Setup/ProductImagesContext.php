@@ -26,19 +26,10 @@ class ProductImagesContext implements Context
      */
     public function iShouldSeeImagePreview($path)
     {
-        $page = $this->createSimpleProductWithImagesPage;
-
-        // le loader doit être affiché
-        $page->isSpinnerVisible();
-
-        // on attend que le spinner soit masqué, donc que l'appel ajax soit terminé
-        $page->waitForAjaxUpload();
-
-        $isImagePreviewVisible = $page->isImagePreviewVisible($path);
+        //Assert::true($this->createSimpleProductWithImagesPage->isSpinnerVisible());
 
         // on vérifie que le lien de l'image en preview est valide
-        Assert::true($isImagePreviewVisible);
-
+        Assert::true($this->createSimpleProductWithImagesPage->isImagePreviewVisible($path));
     }
 
     /**
@@ -72,11 +63,10 @@ class ProductImagesContext implements Context
      */
     public function iShouldSeeEntityCropsAsOptions()
     {
-        $page = $this->createSimpleProductWithImagesPage;
 
-        $productImageCrops = $page->getProductImageCrops();
+        $productImageCrops = $this->createSimpleProductWithImagesPage->getProductImageCrops();
 
-        $optionsInTypeAsText = $page->getTypeOptions();
+        $optionsInTypeAsText = $this->createSimpleProductWithImagesPage->getTypeOptions();
 
         // foreach crops, check if the label of the crop is found is the options of the type select input
         foreach ($productImageCrops as $productImageCrop) {
@@ -89,12 +79,33 @@ class ProductImagesContext implements Context
      */
     public function iShouldBeAbleToCropFreely()
     {
-        $page = $this->createSimpleProductWithImagesPage;
-
-        $page->waitForAjaxUpload();
-
-        $isCroppingFree = $page->isCroppingFree();
-
-        Assert::true($isCroppingFree);
+        Assert::true($this->createSimpleProductWithImagesPage->isCroppingFree());
     }
+
+    /**
+     * @When I select the :square type
+     */
+    public function iSelectType($type)
+    {
+        $this->createSimpleProductWithImagesPage->selectImageType($type);
+    }
+
+
+    /**
+     * @Then I should be able to crop the image only as square
+     */
+    public function iShouldBeAbleToCropAsSquare()
+    {
+        Assert::true($this->createSimpleProductWithImagesPage->isCroppingSquare());
+    }
+
+    /**
+     * @When I apply the crop
+     */
+    public function iApplyTheCrop()
+    {
+        $this->createSimpleProductWithImagesPage->applyCrop();
+    }
+
+
 }
