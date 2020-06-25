@@ -39,12 +39,14 @@
     {% apply spaceless %}
         <div data-form-collection="item" data-form-collection-index="{{ index }}" class="js-admin-collection-media-item column">
             <div class="ui box segment">
-                {{ form_row(form.type, {
-                    attr: {
-                        'class': 'js-admin-media-type',
-                        'data-crop_ratio_url': absolute_url(path('aropixel_sylius_admin_media_crop_ratio'))
-                    }
-                }) }}
+                {% if form.type is defined %}
+                    {{ form_row(form.type, {
+                        attr: {
+                            'class': 'js-admin-media-type',
+                            'data-crop_ratio_url': absolute_url(path('aropixel_sylius_admin_media_crop_ratio'))
+                        }
+                    }) }}
+                {% endif %}
                 {{ form_row(form.path) }}
             </div>
             {% if allow_delete %}
