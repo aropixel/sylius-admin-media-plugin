@@ -10,3 +10,8 @@ aropixel_sylius_admin_media:
     default_crops:
         square: "Format carré"
         portrait: "Format portrait"
+
+
+#artgris_media:
+    #cropped_path: "../../Application/public/uploads/cropped/"
+
