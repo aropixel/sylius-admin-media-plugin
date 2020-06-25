@@ -1,5 +1,5 @@
 {
-    "name": "aropixel/sylius-media-bundle",
+    "name": "aropixel/sylius-admin-media-plugin",
     "type": "sylius-plugin",
     "keywords": ["sylius", "sylius-plugin"],
     "description": "Enhanced sylius admin media management with image cropping, library...",
