@@ -35,6 +35,9 @@ In a sylius application :
 - Install the plugin : 
 `composer require sylius-admin-media-plugin`
 
+If the plugin is not registered in the config/bundles.php file, register it by adding 
+"Aropixel\SyliusAdminMediaPlugin\AropixelSyliusAdminMediaPlugin::class => ['all' => true],"
+
 - Create a aropixel_sylius_admin_media.yaml in the config folder and import the plugin configuration:
 
 ```
