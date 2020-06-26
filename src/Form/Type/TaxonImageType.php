@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Aropixel\SyliusAdminMediaPlugin\Form\Type;
 
-use App\Entity\Taxonomy\TaxonImage;
+use Sylius\Component\Core\Model\TaxonImage;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class TaxonImageType extends ImageType

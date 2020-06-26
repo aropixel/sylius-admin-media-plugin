@@ -41,7 +41,7 @@ class CropRatioManager implements CropRatioManagerInterface
         return $entityCrops;
     }
 
-    public function getRatio(string $type): ?float
+    public function getRatio($type): ?float
     {
         // Récupérer tous les crops dans la config sylius admin
         //$entityCrops = $this->getEntityCrops($entity);
