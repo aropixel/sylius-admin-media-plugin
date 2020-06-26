@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Aropixel\SyliusAdminMediaPlugin\Form\Extension;
 
-use App\Form\Type\TaxonImageType;
+use Aropixel\SyliusAdminMediaPlugin\Form\Type\TaxonImageType;
 use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
