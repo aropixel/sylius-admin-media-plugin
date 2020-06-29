@@ -160,6 +160,17 @@ aropixel_sylius_admin_media:
             home_news: "Home news"
 ```
 
+You can also add default crop format, available for all images:
+
+
+ ```  
+aropixel_sylius_admin_media:
+ 
+    entities_crops:
+        ...
+    default_crops:
+        main: "Default"
+```
 
 And that's it! You can now in the admin choose a format and crop it with a specfic ratio so that it's perfectly suited for your page!
 
