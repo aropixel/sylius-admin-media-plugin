@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Aropixel\SyliusAdminMediaPlugin\Form\Extension;
 
+use Aropixel\SyliusAdminMediaPlugin\Form\Type\AdminMediaCollectionType;
 use Aropixel\SyliusAdminMediaPlugin\Form\Type\TaxonImageType;
 use Sylius\Bundle\TaxonomyBundle\Form\Type\TaxonType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -27,7 +28,7 @@ final class TaxonTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('images', CollectionType::class, [
+            ->add('images', AdminMediaCollectionType::class, [
                 'entry_type' => TaxonImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,

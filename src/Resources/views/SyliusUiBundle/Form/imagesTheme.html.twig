@@ -1,6 +1,6 @@
 {% extends '@!SyliusUi/Form/imagesTheme.html.twig' %}
 
-{% block collection_widget -%}
+{% block admin_media_collection_widget -%}
     {% from '@SyliusResource/Macros/notification.html.twig' import error %}
     {% import _self as self %}
     {% set attr = attr|merge({'class': attr.class|default ~ ' controls collection-widget'}) %}
@@ -33,7 +33,7 @@
             {% endif %}
         </div>
     {% endapply %}
-{%- endblock collection_widget %}
+{%- endblock admin_media_collection_widget %}
 
 {% macro collection_item(form, allow_delete, button_delete_label, index) %}
     {% apply spaceless %}

@@ -2,6 +2,7 @@
 
 namespace Aropixel\SyliusAdminMediaPlugin\Form\Extension;
 
+use Aropixel\SyliusAdminMediaPlugin\Form\Type\AdminMediaCollectionType;
 use Aropixel\SyliusAdminMediaPlugin\Form\Type\ProductImageType;
 use Sylius\Bundle\ChannelBundle\Form\Type\ChannelChoiceType;
 use Sylius\Bundle\CoreBundle\Form\Type\Taxon\ProductTaxonAutocompleteChoiceType;
@@ -53,7 +54,7 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'choices' => array_flip(Product::getVariantSelectionMethodLabels()),
                 'label' => 'sylius.form.product.variant_selection_method',
             ])
-            ->add('images', CollectionType::class, [
+            ->add('images', AdminMediaCollectionType::class, [
                 'entry_type' => ProductImageType::class,
                 'entry_options' => ['product' => $options['data']],
                 'allow_add' => true,
@@ -62,6 +63,7 @@ class ProductTypeExtension extends AbstractTypeExtension
                 'label' => 'sylius.form.product.images',
                 'block_name' => 'entry',
             ])
+
         ;
     }
 
