@@ -76,11 +76,12 @@ class AjaxController extends AbstractController
             if (substr($destinationFolder, -1) !== DIRECTORY_SEPARATOR) {
                 $destinationFolder .= DIRECTORY_SEPARATOR;
             }
+
             $rootdir = $this->params->get('kernel.project_dir');
 
-            //TODO : change with the artgris_file_manager conf dir folder
-            $baseUrl = $rootdir.'/public/media/image';
+            //$baseUrl = $rootdir.$fileManager['conf']['default']['dir'];
 
+            $baseUrl = $fileManager['conf']['default']['dir'];
 
             $cropStrAdd = '_crop_';
             $filename = $pathinfo['filename'];

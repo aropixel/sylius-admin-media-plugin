@@ -11,4 +11,5 @@ artgris_file_manager:
     web_dir: public
     conf:
         default:
-            dir: "../public/media/image"
+            dir: "%kernel.project_dir%/public/media/image"
+            #dir: "/public/media/image"

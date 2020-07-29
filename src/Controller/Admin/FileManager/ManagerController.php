@@ -28,8 +28,6 @@ class ManagerController extends BaseManagerController
             $options += $fileManager->getConfiguration()['upload'];
         }
 
-        dump($options);
-
         $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
 
         $uploadHandler = new UploadHandler($options);
@@ -45,8 +43,6 @@ class ManagerController extends BaseManagerController
 
                 $file->url = $file->name;
             }
-
-
 
 
         }

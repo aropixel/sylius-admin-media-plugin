@@ -41,6 +41,7 @@
                  public="true"
         >
                 <argument type="service" id="router"/>
+                <argument type="service" id="parameter_bag"/>
         </service>
 
         <service id="sylius.form.type.product_image" class="Aropixel\SyliusAdminMediaPlugin\Form\Type\ProductImageType">

@@ -3,6 +3,7 @@
 namespace Aropixel\SyliusAdminMediaPlugin\Service;
 
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService as BaseFileTypeService;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class FileTypeService extends BaseFileTypeService
@@ -13,15 +14,18 @@ class FileTypeService extends BaseFileTypeService
      */
     private $router;
 
+    private $params;
+
 
     /**
      * FileTypeService constructor.
      *
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, ParameterBagInterface $params)
     {
         parent::__construct($router);
+        $this->params = $params;
     }
 
 
@@ -43,11 +47,16 @@ class FileTypeService extends BaseFileTypeService
                 $query = parse_url($filePath, PHP_URL_QUERY);
                 $time = 'time='.time();
 
-                dump($filePath);
+                // get the public dir
+                $publicDir = $this->params->get('kernel.project_dir').'/public';
 
+                $fileManagerParams = $this->params->get('artgris_file_manager');
+                $baseUrl = $fileManagerParams['conf']['default']['dir'];
 
-                //TODO : change with the artgris_file_manager conf dir folder
-                $filePath = '/media/image/'.$filePath;
+                // remove the public dir from the absolute path
+                $relativeBaseUrl = str_replace($publicDir,"", $baseUrl);
+
+                $filePath = $relativeBaseUrl.'/'.$filePath;
 
                 $fileName = $query ? $filePath.'&'.$time : $filePath.'?'.$time;
 
