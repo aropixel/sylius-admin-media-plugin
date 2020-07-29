@@ -77,10 +77,10 @@ For example, imagine you have a blog system in your sylius app and you want to d
 You have two sylius ressource: Post Entity and a PostImage entity.
 
 
-- First you need to create the admin form for your Post entity, and also the admin form for your PostImage entity. The entity form will add a CollectionType for the images:
+- First you need to create the admin form for your Post entity, and also the admin form for your PostImage entity. The entity form will add the AdminMediaCollectionType for the images:
 
 ```
-->add('images', CollectionType::class, [
+->add('images', AdminMediaCollectionType::class, [
                 'entry_type' => PostImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
