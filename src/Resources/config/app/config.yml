@@ -11,4 +11,4 @@ artgris_file_manager:
     web_dir: public
     conf:
         default:
-            dir: "../public/uploads"
+            dir: "../public/media/image"

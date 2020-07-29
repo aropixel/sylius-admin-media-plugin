@@ -28,6 +28,8 @@ class ManagerController extends BaseManagerController
             $options += $fileManager->getConfiguration()['upload'];
         }
 
+        dump($options);
+
         $this->dispatch(FileManagerEvents::PRE_UPDATE, ['options' => &$options]);
 
         $uploadHandler = new UploadHandler($options);
@@ -37,10 +39,16 @@ class ManagerController extends BaseManagerController
             if (isset($file->error)) {
                 $file->error = $this->get('translator')->trans($file->error);
             } else {
-                if (!$fileManager->getImagePath()) {
-                    $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->url]));
-                }
+                //if (!$fileManager->getImagePath()) {
+                //    $file->url = $this->generateUrl('file_manager_file', array_merge($fileManager->getQueryParameters(), ['fileName' => $file->url]));
+                //}
+
+                $file->url = $file->name;
             }
+
+
+
+
         }
 
         $this->dispatch(FileManagerEvents::POST_UPDATE, ['response' => &$response]);

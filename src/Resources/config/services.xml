@@ -17,6 +17,13 @@
                  public="true"
         />
 
+        <service id="aropixel_sylius_admin_media.controller.admin_ajax_controller"
+                 class="Aropixel\SyliusAdminMediaPlugin\Controller\Admin\Media\AjaxController"
+                 public="true"
+        >
+            <argument type="service" id="parameter_bag"/>
+        </service>
+
         <service id="aropixel_sylius_admin_media.controller.admin_media_crop_ratio"
                  class="Aropixel\SyliusAdminMediaPlugin\Controller\Admin\Crop\CropRatioController"
                  public="true"
@@ -28,6 +35,13 @@
                  class="Aropixel\SyliusAdminMediaPlugin\FileManager\Helpers\UploadHandler"
         />
 
+
+        <service id="file_type_service"
+                 class="Aropixel\SyliusAdminMediaPlugin\Service\FileTypeService"
+                 public="true"
+        >
+                <argument type="service" id="router"/>
+        </service>
 
         <service id="sylius.form.type.product_image" class="Aropixel\SyliusAdminMediaPlugin\Form\Type\ProductImageType">
             <argument type="service" id="aropixel_sylius_admin_media.image_crop.crop_ratio_manager"/>

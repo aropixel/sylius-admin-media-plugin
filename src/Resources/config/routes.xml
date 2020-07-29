@@ -14,6 +14,11 @@
     <!-- override file manager upload bundle -->
     <route id="file_manager_upload"
            controller="aropixel_sylius_admin_media.controller.admin_file_manager:uploadFileAction"
+           path="/admin/ajax-crop/"
+    />
+
+    <route id="admin_ajax_crop"
+           controller="aropixel_sylius_admin_media.controller.admin_ajax_controller:ajaxCrop"
            path="/admin/manager/upload/"
     />
 
