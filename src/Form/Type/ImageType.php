@@ -92,7 +92,7 @@ abstract class ImageType extends AbstractResourceType
      */
     public function getBlockPrefix(): string
     {
-        return 'sylius_image';
+        return 'aropixel_media_image';
     }
 
 

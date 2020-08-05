@@ -31,10 +31,13 @@ class FileTypeService extends BaseFileTypeService
 
     public function fileIcon($filePath, $extension = null, $size = 75, $lazy = false)
     {
+
         if (null === $extension) {
             $filePathTmp = strtok($filePath, '?');
             $extension = pathinfo($filePathTmp, PATHINFO_EXTENSION);
         }
+
+
         switch (true) {
             case $this->isYoutubeVideo($filePath):
             case preg_match('/(mp4|ogg|webm|avi|wmv|mov)$/i', $extension):
@@ -56,9 +59,9 @@ class FileTypeService extends BaseFileTypeService
                 // remove the public dir from the absolute path
                 $relativeBaseUrl = str_replace($publicDir,"", $baseUrl);
 
-                $filePath = $relativeBaseUrl.'/'.$filePath;
+                $filePathRelative = $relativeBaseUrl.'/'.$filePath;
 
-                $fileName = $query ? $filePath.'&'.$time : $filePath.'?'.$time;
+                $fileName = $query ? $filePathRelative.'&'.$time : $filePathRelative.'?'.$time;
 
                 if ($lazy) {
                     $html = "<img class=\"lazy\" data-src=\"{$fileName}\" height='{$size}'>";
