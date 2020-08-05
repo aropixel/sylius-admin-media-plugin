@@ -2,9 +2,11 @@
 
 namespace Aropixel\SyliusAdminMediaPlugin\Service;
 
+use Artgris\Bundle\FileManagerBundle\Helpers\FileManager;
 use Artgris\Bundle\FileManagerBundle\Service\FileTypeService as BaseFileTypeService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Routing\RouterInterface;
+use SplFileInfo;
 
 class FileTypeService extends BaseFileTypeService
 {
@@ -25,6 +27,7 @@ class FileTypeService extends BaseFileTypeService
     public function __construct(RouterInterface $router, ParameterBagInterface $params)
     {
         parent::__construct($router);
+        $this->router = $router;
         $this->params = $params;
     }
 
@@ -38,7 +41,7 @@ class FileTypeService extends BaseFileTypeService
                 array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
         }
 
-        //$filePath = $file->getFilename();
+        $filePath = $file->getFilename();
 
         $extension = $file->getExtension();
         $type = $file->getType();
