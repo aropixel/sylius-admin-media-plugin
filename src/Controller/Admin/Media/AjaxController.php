@@ -20,6 +20,7 @@ class AjaxController extends AbstractController
         $this->params = $params;
     }
 
+
     public function ajaxCrop(Request $request)
     {
         $post = $request->request;
@@ -41,6 +42,8 @@ class AjaxController extends AbstractController
             $artgrisConf = $this->get('artgris_bundle_file_manager.service.filemanager_service')->getBasePath(['conf' => $conf]);
             $destinationFolder = $artgrisConf['dir'];
         }
+
+        dump($destinationFolder);
 
 
         $flipX = $scaleX !== 1;
