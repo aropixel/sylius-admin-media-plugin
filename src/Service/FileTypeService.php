@@ -28,6 +28,40 @@ class FileTypeService extends BaseFileTypeService
         $this->params = $params;
     }
 
+    public function preview(FileManager $fileManager, SplFileInfo $file)
+    {
+
+        if ($fileManager->getImagePath()) {
+            $filePath = htmlentities($fileManager->getImagePath().rawurlencode($file->getFilename()));
+        } else {
+            $filePath = $this->router->generate('file_manager_file',
+                array_merge($fileManager->getQueryParameters(), ['fileName' => rawurlencode($file->getFilename())]));
+        }
+
+        //$filePath = $file->getFilename();
+
+        $extension = $file->getExtension();
+        $type = $file->getType();
+
+        if ('file' === $type) {
+
+            $size = $this::IMAGE_SIZE[$fileManager->getView()];
+
+            return $this->fileIcon($filePath, $extension, $size, true);
+        }
+
+        if ('dir' === $type) {
+            $href = $this->router->generate('file_manager', array_merge($fileManager->getQueryParameters(),
+                ['route' => $fileManager->getRoute().'/'.rawurlencode($file->getFilename())]));
+
+            return [
+                'path' => $filePath,
+                'html' => "<i class='fas fa-folder-open' aria-hidden='true'></i>",
+                'folder' => '<a  href="'.$href.'">'.$file->getFilename().'</a>',
+            ];
+        }
+    }
+
 
     public function fileIcon($filePath, $extension = null, $size = 75, $lazy = false)
     {
