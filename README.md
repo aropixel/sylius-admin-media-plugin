@@ -42,14 +42,14 @@ If the plugin is not registered in the config/bundles.php file, register it by a
 
 ```
 imports:
-    - { resource: "@AropixelSyliusAdminMediaBundle/Resources/config/app/config.yml" }
+    - { resource: "@AropixelSyliusAdminMediaPlugin/Resources/config/app/config.yml" }
 ```
 
 - Create a aropixel_sylius_admin_media.yaml in the config/routes folder and import the plugin routes:
 
 ```
 aropixel_sylius_admin_media:
-    '@AropixelSyliusAdminMediaBundle/Resources/config/routes.xml'
+    resource: '@AropixelSyliusAdminMediaPlugin/Resources/config/routes.xml'
 ```
 
 - In the bundles.php file, register the new plugins: 
