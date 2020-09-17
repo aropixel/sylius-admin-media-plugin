@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<h1 align="center">Sylius Admin Media Pugin</h1>
+<h1 align="center">Sylius Admin Media Plugin</h1>
 <h3 align="center">Enhanced sylius admin media management with image cropping, library (based on Artgris Media Bundle)</h3>
 
 
@@ -33,7 +33,7 @@ This plugin is heavily based on the artgris media bundle and file manager.
 In a sylius application :
 
 - Install the plugin : 
-`composer require sylius-admin-media-plugin`
+`composer require aropixel/sylius-admin-media-plugin`
 
 If the plugin is not registered in the config/bundles.php file, register it by adding 
 "Aropixel\SyliusAdminMediaPlugin\AropixelSyliusAdminMediaPlugin::class => ['all' => true],"
