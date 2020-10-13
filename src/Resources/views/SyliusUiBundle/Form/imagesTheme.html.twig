@@ -17,7 +17,7 @@
 
             {% if prototypes|default is iterable %}
                 {% for key, subPrototype in prototypes %}
-                    <input type="hidden" data-form-prototype="{{ key }}" value="{{ self.collection_item(subPrototype, allow_delete, button_delete_label, '__name__')|e }}" />
+                    <input type="hidden" data-form-prototype="{{ key }}" value="{{ self.collection_item(subPrototype, allow_delete, button_delete_label, prototype_name)|e }}" />
                 {% endfor %}
             {% endif %}
 
