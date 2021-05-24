@@ -6,9 +6,10 @@ namespace Aropixel\SyliusAdminMediaPlugin\Form\Type;
 
 use Aropixel\SyliusAdminMediaPlugin\ImageCrop\CropRatioManager;
 use Aropixel\SyliusAdminMediaPlugin\ImageCrop\CropRatioManagerInterface;
-use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
+//use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
 use Sylius\Bundle\ResourceBundle\Form\Type\AbstractResourceType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -48,14 +49,14 @@ abstract class ImageType extends AbstractResourceType
 
                 }
 
-                $form->add('path', MediaType::class, [
-                    'conf' => 'default',
-                    'crop_options' => [
-                        'display_crop_data' => false,
-                        'allow_flip' => true,
-                        'allow_rotation' => true,
-                        'ratio' => $this->getRatio($event)
-                    ]
+                $form->add('path', HiddenType::class, [
+//                    'conf' => 'default',
+//                    'crop_options' => [
+//                        'display_crop_data' => false,
+//                        'allow_flip' => true,
+//                        'allow_rotation' => true,
+//                        'ratio' => $this->getRatio($event)
+//                    ]
                 ]);
 
             }

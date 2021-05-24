@@ -21,7 +21,7 @@
                 {% endfor %}
             {% endif %}
 
-            <div data-form-collection="list" class="js-admin-collection-media">
+            <div data-form-collection="list" class="js-admin-collection-media ui special cards">
                 {% for child in form %}
                     {{ self.collection_item(child, allow_delete, button_delete_label, loop.index0) }}
                 {% endfor %}
@@ -39,26 +39,82 @@
 
 {% macro collection_item(form, allow_delete, button_delete_label, index) %}
     {% apply spaceless %}
-        <div data-form-collection="item" data-form-collection-index="{{ index }}" class="js-admin-collection-media-item column">
-            <div class="ui box segment">
-                {% if form.type is defined %}
-                    {{ form_row(form.type, {
-                        attr: {
-                            'class': 'js-admin-media-type',
-                            'data-crop_ratio_url': absolute_url(path('aropixel_sylius_admin_media_crop_ratio'))
-                        }
-                    }) }}
-                {% endif %}
+        <div data-form-collection="item" data-form-collection-index="{{ index }}" class="ui js-admin-collection-media-item card">
+
+            {% if form.vars.value.path|default(null) is not null %}
+
+            <div class="blurring dimmable image">
+                <div class="ui dimmer">
+                    <div class="content">
+                        <div class="center">
+                        {% if allow_delete %}
+                            <a href="#" data-form-collection="delete" class="ui red labeled icon button" style="margin-bottom: 1em;">
+                                <i class="trash icon"></i>
+                                {{ button_delete_label|trans }}
+                            </a>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <img src="{{ form.vars.value.path|imagine_filter('sylius_small') }}" alt="{{ form.vars.value.type }}">
                 {% if form.path is defined %}
                     {{ form_row(form.path) }}
                 {% endif %}
             </div>
-            {% if allow_delete %}
-                <a href="#" data-form-collection="delete" class="ui red labeled icon button" style="margin-bottom: 1em;">
-                    <i class="trash icon"></i>
-                    {{ button_delete_label|trans }}
-                </a>
+            <div class="extra content">
+                <div>
+                    <span>
+                        <i class="file outline icon"></i>
+                        sdjlkfdsjkljklfdjs.jpeg
+                    </span>
+                </div>
+                <div class="ui divider"></div>
+
+                <div>
+                <span>
+                    <i class="file outline image icon"></i>
+                    750kb
+                </span>
+                </div>
+            </div>
+
+            {% else %}
+
+                <div class="blurring dimmable image">
+                    <div class="ui dimmer">
+                        <div class="content">
+                            <div class="center">
+                                <a href="#" class="ui labeled icon button" style="margin-bottom: 1em;">
+                                    <i class="upload icon"></i>
+                                    Upload
+                                </a>
+                                <a href="#" class="ui labeled icon button" style="margin-bottom: 1em;">
+                                    <i class="upload icon"></i>
+                                    Choose
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image">
+                        <img class="ui wireframe image" src="{{ asset('bundles/aropixelsyliusadminmediaplugin/img/image.png') }}">
+                    </div>
+                </div>
+
             {% endif %}
+
+
+
+{#            <div class="ui box segment">#}
+{#                {% if form.type is defined %}#}
+{#                    {{ form_row(form.type, {#}
+{#                        attr: {#}
+{#                            'class': 'js-admin-media-type',#}
+{#                            'data-crop_ratio_url': absolute_url(path('aropixel_sylius_admin_media_crop_ratio'))#}
+{#                        }#}
+{#                    }) }}#}
+{#                {% endif %}#}
+
+{#            </div>#}
         </div>
     {% endapply %}
 {% endmacro %}
